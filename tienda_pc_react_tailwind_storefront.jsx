@@ -133,14 +133,14 @@ function classNames(...c) {
 }
 
 function formatPrice(n) {
-  return new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(n);
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(n);
 }
 
 function Rating({ value }) {
   const full = Math.floor(value);
   const half = value - full >= 0.5;
   return (
-    <div className="flex items-center gap-1" aria-label={`Calificación ${value.toFixed(1)} de 5`}>
+    <div className="flex items-center gap-1" aria-label={`Rating ${value.toFixed(1)} out of 5`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
@@ -159,7 +159,7 @@ function Rating({ value }) {
 export default function TiendaPC() {
   const [query, setQuery] = useState("");
   const [selectedCats, setSelectedCats] = useState([]);
-  const [brand, setBrand] = useState("Todos");
+  const [brand, setBrand] = useState("All");
   const [sort, setSort] = useState("popular");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
@@ -167,7 +167,7 @@ export default function TiendaPC() {
   const [cart, setCart] = useState({}); // id -> qty
   const [dark, setDark] = useState(true);
 
-  const brands = useMemo(() => ["Todos", ...Array.from(new Set(PRODUCTS.map((p) => p.brand)))], []);
+  const brands = useMemo(() => ["All", ...Array.from(new Set(PRODUCTS.map((p) => p.brand)))], []);
 
   const toggleCat = (c) =>
     setSelectedCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]));
@@ -178,7 +178,7 @@ export default function TiendaPC() {
       [p.name, p.brand, p.category, ...(p.tags || [])].some((t) => t.toLowerCase().includes(q))
     ).filter((p) =>
       (selectedCats.length ? selectedCats.includes(p.category) : true) &&
-      (brand === "Todos" ? true : p.brand === brand) &&
+      (brand === "All" ? true : p.brand === brand) &&
       p.price >= minPrice && p.price <= maxPrice
     );
 
@@ -246,7 +246,7 @@ export default function TiendaPC() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar GPUs, CPU, RAM..."
+              placeholder="Search GPUs, CPU, RAM..."
               className="bg-transparent outline-none w-full text-sm"
             />
           </div>
@@ -278,7 +278,7 @@ export default function TiendaPC() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar GPUs, CPU, RAM..."
+              placeholder="Search GPUs, CPU, RAM..."
               className="bg-transparent outline-none w-full text-sm"
             />
           </div>
@@ -293,11 +293,11 @@ export default function TiendaPC() {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl md:text-5xl font-extrabold tracking-tight"
           >
-            Arma tu PC de ensueño
+            Build Your Dream PC
           </motion.h1>
           <p className="mt-3 text-slate-600 dark:text-slate-300 max-w-2xl">
-            Componentes de alto rendimiento, envíos rápidos y soporte experto. Encuentra lo que
-            necesitas para jugar, crear y trabajar.
+            High-performance components, fast shipping, and expert support. Find everything
+            you need to game, create, and work.
           </p>
         </div>
       </section>
@@ -309,19 +309,19 @@ export default function TiendaPC() {
           <div className="sticky top-20 space-y-4">
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold flex items-center gap-2"><FilterIcon className="h-4 w-4"/>Filtros</h3>
+                <h3 className="font-semibold flex items-center gap-2"><FilterIcon className="h-4 w-4"/>Filters</h3>
                 <button
                   className="text-xs text-sky-700 dark:text-sky-400 underline"
                   onClick={() => {
-                    setSelectedCats([]); setBrand("Todos"); setMinPrice(0); setMaxPrice(1000); setSort("popular");
+                    setSelectedCats([]); setBrand("All"); setMinPrice(0); setMaxPrice(1000); setSort("popular");
                   }}
                 >
-                  Limpiar
+                  Clear
                 </button>
               </div>
 
               <div className="mb-4">
-                <label className="text-sm font-medium">Categorías</label>
+                <label className="text-sm font-medium">Categories</label>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {CATEGORIES.map((c) => (
                     <button
@@ -341,7 +341,7 @@ export default function TiendaPC() {
               </div>
 
               <div className="mb-4">
-                <label className="text-sm font-medium">Marca</label>
+                <label className="text-sm font-medium">Brand</label>
                 <div className="relative mt-2">
                   <select
                     value={brand}
@@ -357,7 +357,7 @@ export default function TiendaPC() {
               </div>
 
               <div className="mb-4">
-                <label className="text-sm font-medium">Precio</label>
+                <label className="text-sm font-medium">Price</label>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   <input
                     type="number"
@@ -365,7 +365,7 @@ export default function TiendaPC() {
                     value={minPrice}
                     onChange={(e) => setMinPrice(Number(e.target.value))}
                     className="rounded-xl border border-slate-200 dark:border-slate-800 bg-transparent px-3 py-2 text-sm"
-                    placeholder="Mín"
+                    placeholder="Min"
                   />
                   <input
                     type="number"
@@ -373,23 +373,23 @@ export default function TiendaPC() {
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(Number(e.target.value))}
                     className="rounded-xl border border-slate-200 dark:border-slate-800 bg-transparent px-3 py-2 text-sm"
-                    placeholder="Máx"
+                    placeholder="Max"
                   />
                 </div>
               </div>
 
               <div className="mb-2">
-                <label className="text-sm font-medium">Ordenar por</label>
+                <label className="text-sm font-medium">Sort by</label>
                 <div className="relative mt-2">
                   <select
                     value={sort}
                     onChange={(e) => setSort(e.target.value)}
                     className="w-full appearance-none rounded-xl border border-slate-200 dark:border-slate-800 bg-transparent px-3 py-2 pr-8 text-sm"
                   >
-                    <option value="popular">Popularidad</option>
-                    <option value="price-asc">Precio: más bajo</option>
-                    <option value="price-desc">Precio: más alto</option>
-                    <option value="rating">Mejor calificación</option>
+                    <option value="popular">Popularity</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating">Best Rating</option>
                   </select>
                   <ChevronDown className="h-4 w-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
@@ -397,12 +397,12 @@ export default function TiendaPC() {
             </div>
 
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
-              <h4 className="font-semibold mb-2">¿Necesitas ayuda?</h4>
+              <h4 className="font-semibold mb-2">Need help?</h4>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                Nuestro equipo puede asesorarte para elegir la mejor combinación de componentes según tu presupuesto.
+                Our team can advise you to choose the best combination of components according to your budget.
               </p>
               <button className="mt-3 w-full rounded-xl bg-sky-600 text-white px-4 py-2 text-sm font-medium shadow hover:opacity-90">
-                Hablar con un asesor
+                Talk to an advisor
               </button>
             </div>
           </div>
@@ -412,7 +412,7 @@ export default function TiendaPC() {
         <section className="lg:col-span-9">
           <div className="flex items-center justify-between mb-3">
             <p className="text-sm text-slate-600 dark:text-slate-300">
-              {filtered.length} resultados
+              {filtered.length} results
             </p>
           </div>
 
@@ -431,7 +431,7 @@ export default function TiendaPC() {
                     <span className={classNames(
                       "text-xs px-2 py-1 rounded-full",
                       p.stock > 0 ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300" : "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300"
-                    )}>{p.stock > 0 ? "En stock" : "Agotado"}</span>
+                    )}>{p.stock > 0 ? "In stock" : "Out of stock"}</span>
                   </div>
 
                   <div className="mt-2 flex items-center justify-between">
@@ -453,13 +453,13 @@ export default function TiendaPC() {
                       onClick={() => addToCart(p.id)}
                       className="flex-1 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-2 text-sm font-medium hover:opacity-90 disabled:opacity-50"
                     >
-                      Añadir al carrito
+                      Add to cart
                     </button>
                     <button
                       className="rounded-xl border border-slate-200 dark:border-slate-800 px-3 py-2 text-sm"
                       onClick={() => setCartOpen(true)}
                     >
-                      Ver
+                      View
                     </button>
                   </div>
                 </div>
@@ -471,35 +471,35 @@ export default function TiendaPC() {
 
       {/* Galería: Almacén y Oficinas */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-16">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">Nuestras instalaciones</h2>
-        <p className="text-slate-600 dark:text-slate-300 mb-6">Un vistazo a nuestro almacén y oficinas donde preparamos y gestionamos tus pedidos.</p>
+        <h2 className="text-2xl md:text-3xl font-bold mb-2">Our Facilities</h2>
+        <p className="text-slate-600 dark:text-slate-300 mb-6">A glimpse at our warehouse and offices where we prepare and manage your orders.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Almacén */}
           <figure className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-            <img src="/images/almacen1.png" alt="Pasillos de almacén con estanterías" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Almacén</figcaption>
+            <img src="/images/almacen1.png" alt="Warehouse aisles with shelving" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Warehouse</figcaption>
           </figure>
           <figure className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-            <img src="/images/paletasconcajaenalmacen.png" alt="Palets con cajas en almacén" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Almacén</figcaption>
+            <img src="/images/paletasconcajaenalmacen.png" alt="Pallets with boxes in warehouse" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Warehouse</figcaption>
           </figure>
           <figure className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-            <img src="/images/almacen2.png" alt="Zona de empaque y logística" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Almacén</figcaption>
+            <img src="/images/almacen2.png" alt="Packing and logistics area" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Warehouse</figcaption>
           </figure>
 
           {/* Oficinas */}
           <figure className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-            <img src="/images/office-1.jpg" alt="Espacio de oficinas moderno" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Oficinas</figcaption>
+            <img src="/images/office-1.jpg" alt="Modern office space" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Offices</figcaption>
           </figure>
           <figure className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-            <img src="/images/office-2.jpg" alt="Sala de reuniones" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Oficinas</figcaption>
+            <img src="/images/office-2.jpg" alt="Meeting room" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Offices</figcaption>
           </figure>
           <figure className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-            <img src="/images/office-3.jpg" alt="Equipo trabajando en la oficina" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Oficinas</figcaption>
+            <img src="/images/office-3.jpg" alt="Team working at the office" className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+            <figcaption className="absolute left-3 bottom-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">Offices</figcaption>
           </figure>
         </div>
       </section>
@@ -525,7 +525,7 @@ export default function TiendaPC() {
               className="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-800"
             >
               <div className="p-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
-                <h3 className="font-semibold text-lg">Tu carrito</h3>
+                <h3 className="font-semibold text-lg">Your Cart</h3>
                 <button className="rounded-full p-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => setCartOpen(false)}>
                   <X className="h-5 w-5" />
                 </button>
@@ -533,7 +533,7 @@ export default function TiendaPC() {
 
               <div className="p-4 space-y-3 overflow-auto h-[calc(100%-180px)]">
                 {Object.keys(cart).length === 0 && (
-                  <p className="text-sm text-slate-600 dark:text-slate-300">Tu carrito está vacío.</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">Your cart is empty.</p>
                 )}
                 {Object.entries(cart).map(([id, qty]) => {
                   const item = PRODUCTS.find((p) => p.id === id);
@@ -562,7 +562,7 @@ export default function TiendaPC() {
                         <button
                           onClick={() => removeFromCart(id)}
                           className="ml-2 h-8 w-8 grid place-content-center rounded-full border border-slate-200 dark:border-slate-800 text-rose-600"
-                          title="Eliminar"
+                          title="Remove"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -574,7 +574,7 @@ export default function TiendaPC() {
 
               <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
                 <div className="flex items-center justify-between text-sm">
-                  <span>Artículos</span>
+                  <span>Items</span>
                   <span>{totalItems}</span>
                 </div>
                 <div className="flex items-center justify-between text-base font-semibold">
@@ -583,10 +583,10 @@ export default function TiendaPC() {
                 </div>
                 <div className="flex gap-2 pt-2">
                   <button onClick={clearCart} className="w-1/3 rounded-xl border border-slate-200 dark:border-slate-800 px-4 py-2 text-sm">
-                    Vaciar
+                    Clear
                   </button>
                   <button className="flex-1 rounded-xl bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:opacity-90">
-                    Finalizar compra
+                    Checkout
                   </button>
                 </div>
               </div>
@@ -598,11 +598,11 @@ export default function TiendaPC() {
       {/* Footer */}
       <footer className="border-t border-slate-200 dark:border-slate-800 mt-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 text-sm text-slate-600 dark:text-slate-300 flex flex-col md:flex-row items-center justify-between gap-2">
-          <p>© {new Date().getFullYear()} Globalaxis Unipessoal. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Globalaxis Unipessoal. All rights reserved.</p>
           <nav className="flex items-center gap-4">
-            <a href="#" className="hover:underline">Política de privacidad</a>
-            <a href="#" className="hover:underline">Términos</a>
-            <a href="#" className="hover:underline">Contacto</a>
+            <a href="#" className="hover:underline">Privacy Policy</a>
+            <a href="#" className="hover:underline">Terms</a>
+            <a href="#" className="hover:underline">Contact</a>
           </nav>
         </div>
       </footer>

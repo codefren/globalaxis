@@ -1,42 +1,42 @@
-# Globalaxis Unipessoal - Tienda Online
+# Globalaxis Unipessoal - Online Store
 
-Tienda de componentes de PC construida con React, Vite y Tailwind CSS.
+PC components store built with React, Vite and Tailwind CSS.
 
-## 🚀 Desarrollo Local
+## 🚀 Local Development
 
 ```bash
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Ejecutar en modo desarrollo
+# Run in development mode
 npm run dev
 
-# Crear build de producción
+# Create production build
 npm run build
 
-# Servir en producción
+# Serve in production
 npm start
 ```
 
-## 📦 Deploy en Render.io
+## 📦 Deploy on Render.io
 
-### Configuración en Render.io:
+### Configuration on Render.io:
 
 1. **Build Command**: `npm install`
 2. **Start Command**: `npm start`
 3. **Runtime**: Node 18+
 
-El proyecto usa `render.yaml` para configuración automática.
+The project uses `render.yaml` for automatic configuration.
 
-### Variables de entorno:
-- `PORT` - Puerto dinámico proporcionado por Render (automático)
-- `NODE_VERSION` - Versión de Node.js (18)
+### Environment variables:
+- `PORT` - Dynamic port provided by Render (automatic)
+- `NODE_VERSION` - Node.js version (18)
 
-## 🛠️ Tecnologías
+## 🛠️ Technologies
 
-- **React 18** - Framework UI
-- **Vite** - Build tool y dev server
-- **Tailwind CSS** - Estilos
-- **Framer Motion** - Animaciones
-- **Lucide React** - Iconos
-- **serve-handler** - Servidor de producción
+- **React 18** - UI Framework
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styles
+- **Framer Motion** - Animations
+- **Lucide React** - Icons
+- **serve-handler** - Production server
